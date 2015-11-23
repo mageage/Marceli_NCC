@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <newsletter translate="title" module="newsletter">
+            <children>
+                <codes module="marceli_ncc">
+                    <title>Newsletter Coupon Codes</title>
+                    <sort_order>100</sort_order>
+                    <action>admin_ncc/adminhtml_codes</action>
+                </codes>
+            </children>
+        </newsletter>
+    </menu>
+</config>
