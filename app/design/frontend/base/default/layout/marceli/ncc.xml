@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout>
+    <default>
+        <reference name="before_body_end">
+            <block type="marceli_ncc/form"
+                   name="marceli.ncc.form"
+                   template="marceli/ncc/form.phtml"/>
+        </reference>
+    </default>
+</layout>
