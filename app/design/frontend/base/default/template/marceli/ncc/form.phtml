@@ -1,0 +1,116 @@
+<?php $_cookieHelper = Mage::helper('marceli_ncc/cookie') ?>
+<?php $_configHelper = Mage::helper('marceli_ncc/config') ?>
+<?php if (!$_cookieHelper->getCookie() || !$_configHelper->getIsEnabled()) : ?>
+    <div id="boxes">
+        <div id="dialog" class="window">
+            <div id="popupfoot">
+                <a href="#" class="close agree">x</a>
+            </div>
+            <div class="block block-subscribe">
+                <div class="block-title">
+                    <strong><span><?php echo $this->__($_configHelper->getHeaderTitle()) ?></span></strong>
+                </div>
+                <form action="<?php echo $this->getFormActionUrl() ?>" method="post" id="ncc-newsletter-validate-detail">
+                    <div class="block-content">
+                        <span class="form-subscribe-header">
+                            <label for="ncc-newsletter"><?php echo $this->__($_configHelper->getDescription()) ?></label>
+                        </span>
+                        <div class="input-box">
+                            <input type="text" name="email" id="ncc-newsletter" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Sign up for our newsletter')) ?>" class="input-text required-entry validate-email" />
+                        </div>
+                        <div class="actions">
+                            <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Subscribe')) ?>" class="button"><span><span><?php echo $this->__('Subscribe') ?></span></span></button>
+                        </div>
+                    </div>
+                </form>
+                <script type="text/javascript">
+                    //<![CDATA[
+                    var newsletterSubscriberFormDetail = new VarienForm('ncc-newsletter-validate-detail');
+                    //]]>
+                </script>
+            </div>
+        </div>
+        <div id="mask"></div>
+    </div>
+    <style type="text/css">
+        #dialog .block-subscribe {
+            text-align: left;
+        }
+
+        #dialog .block-subscribe .input-box {
+            position: absolute;
+            top: 230px;
+        }
+
+        #dialog .block-subscribe .actions {
+            position: absolute;
+            top: 221px;
+            left: 390px;
+        }
+
+        #mask {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 9000;
+            background-color: #000;
+            display: none;
+        }
+
+        #boxes .window {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 600px;
+            height: 350px;
+            display: none;
+            z-index: 9999;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        #boxes #dialog {
+            width: 750px;
+            height: 300px;
+            padding: 10px;
+            background-color: #ffffff;
+            background-image: url("<?php echo $_configHelper->getBackgroundImg() ?>");
+            background-position: top center;
+            background-repeat: no-repeat;
+            font-family: 'Segoe UI Light', sans-serif;
+            font-size: 15pt;
+        }
+
+        #popupfoot {
+            font-size: 16pt;
+            text-align: right;
+            padding-right: 10px;
+        }
+    </style>
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+
+            var id = '#dialog';
+            var maskHeight = jQuery(document).height();
+            var maskWidth = jQuery(window).width();
+
+            jQuery('#mask').css({'width':maskWidth,'height':maskHeight});
+            jQuery('#mask').fadeIn(500);
+            jQuery('#mask').fadeTo("slow",0.4);
+
+            var winH = jQuery(window).height();
+            var winW = jQuery(window).width();
+
+            jQuery(id).css('top',  winH/2-jQuery(id).height()/2);
+            jQuery(id).css('left', winW/2-jQuery(id).width()/2);
+            jQuery(id).fadeIn(2000);
+            jQuery('.window .close').click(function (e) {
+                e.preventDefault();
+                jQuery.get("<?php echo $this->getCloseFormUrl() ?>");
+                jQuery('#mask').hide();
+                jQuery('.window').hide();
+            });
+        });
+    </script>
+<?php endif ?>
