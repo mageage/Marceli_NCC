@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <marceli_ncc_adminhtml_codes_index>
+        <reference name="content">
+            <block type="marceli_ncc/adminhtml_codes" name="marceli_ncc_codes" />
+        </reference>
+    </marceli_ncc_adminhtml_codes_index>
+</layout>
