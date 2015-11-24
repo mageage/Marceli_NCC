@@ -89,13 +89,13 @@
     </global>
     <admin>
         <routers>
-            <marceli_ncc>
-                <use>admin</use>
+            <adminhtml>
                 <args>
-                    <module>Marceli_NCC</module>
-                    <frontName>admin_ncc</frontName>
+                    <modules>
+                        <marceli_ncc after="Mage_Adminhtml">Marceli_NCC</marceli_ncc>
+                    </modules>
                 </args>
-            </marceli_ncc>
+            </adminhtml>
         </routers>
     </admin>
     <adminhtml>
