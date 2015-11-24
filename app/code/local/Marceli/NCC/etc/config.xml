@@ -92,7 +92,7 @@
             <adminhtml>
                 <args>
                     <modules>
-                        <marceli_ncc after="Mage_Adminhtml">Marceli_NCC</marceli_ncc>
+                        <marceli_ncc after="Mage_Adminhtml">MarceliNCC_Adminhtml</marceli_ncc>
                     </modules>
                 </args>
             </adminhtml>
