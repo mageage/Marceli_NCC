@@ -20,9 +20,26 @@ class Marceli_NCC_Block_Adminhtml_Codes_Grid
     protected function _prepareCollection()
     {
         $collection = Mage::getModel("marceli_ncc/codes")->getCollection();
+        $collection = $this->_joinCouponCodes($collection);
         $this->setCollection($collection);
 
         return parent::_prepareCollection();
+    }
+
+    /**
+     * @param $collection
+     * @return mixed
+     */
+    protected function _joinCouponCodes($collection)
+    {
+        $select = $collection->getSelect();
+        $select->joinLeft(
+            array('coupon_code' => 'salesrule_coupon'),
+            'coupon_code.coupon_id = main_table.coupon_id',
+            array('coupon_code.code')
+        );
+
+        return $collection;
     }
 
     protected function _prepareColumns()
@@ -40,9 +57,9 @@ class Marceli_NCC_Block_Adminhtml_Codes_Grid
             "index" => "rule_id",
         ));
 
-        $this->addColumn("coupon_id", array(
-            "header" => Mage::helper("marceli_ncc")->__("Coupon ID"),
-            "index" => "coupon_id",
+        $this->addColumn("code", array(
+            "header" => Mage::helper("marceli_ncc")->__("Coupon Code"),
+            "index" => "code",
         ));
 
         $this->addColumn("customer_email", array(

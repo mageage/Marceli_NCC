@@ -30,15 +30,22 @@ class Marceli_NCC_Model_Observer
         $data       = $subscriber->getData();
         $canProcess = true;
 
-        if ($this->_getCustomerOrdersByEmail($data['subscriber_email'])) {
-            Mage::log('Customer already exists in orders!', Zend_Log::INFO, self::LOG_FILE);
-            $canProcess = false;
-        }
+	
+    	if ($this->_getCustomerOrdersByEmail($data['subscriber_email'])) {
+	        $orderErrMsg = Mage::helper("marceli_ncc")->__('Customer already exists in orders!');
+    	    Mage::log($orderErrMsg, Zend_Log::INFO, self::LOG_FILE);
+    	    $canProcess = false;
+            Mage::getSingleton('core/session')->addError($orderErrMsg);
+	        throw new Exception($orderErrMsg);
+    	}
 
-        if ($this->_isCustomerSubscribed($data['subscriber_email'])) {
-            Mage::log('Customer already exists in newsletter!', Zend_Log::INFO, self::LOG_FILE);
-            $canProcess = false;
-        }
+    	if ($this->_isCustomerSubscribed($data['subscriber_email'])) {
+	        $subErrMsg = Mage::helper("marceli_ncc")->__('Customer already exists in newsletter!');
+    	    Mage::log($subErrMsg, Zend_Log::INFO, self::LOG_FILE);
+    	    $canProcess = false;
+            Mage::getSingleton('core/session')->addError($subErrMsg);
+	        throw new Exception($subErrMsg);
+    	}
 
         Mage::register('can_process_ncc', $canProcess);
     }
@@ -152,7 +159,12 @@ class Marceli_NCC_Model_Observer
             ->setType('html');
 
         try {
-            $mail->send();
+	    $sendMail = new Zend_Mail('utf-8');
+	    $sendMail->setBodyHtml($mail->getBody());
+	    $sendMail->setFrom($mail->getFromEmail(), $mail->getFromName())
+        	     ->addTo($mail->getToEmail(), $mail->getToName())
+        	     ->setSubject($mail->getSubject());
+    	    $sendMail->send();
         } catch (Exception $error) {
             Mage::log($error->getMessage(), null, self::LOG_FILE);
         }

@@ -22,6 +22,15 @@
                 </marceli_ncc>
             </updates>
         </layout>
+        <translate>
+            <modules>
+                <Marceli_NCC>
+                    <files>
+                        <default>Marceli_NCC.csv</default>
+                    </files>
+                </Marceli_NCC>
+            </modules>
+        </translate>
     </frontend>
     <global>
         <helpers>
@@ -92,7 +101,7 @@
             <adminhtml>
                 <args>
                     <modules>
-                        <marceli_ncc after="Mage_Adminhtml">MarceliNCC_Adminhtml</marceli_ncc>
+                        <marceli_ncc after="Mage_Adminhtml">Marceli_NCC_Adminhtml</marceli_ncc>
                     </modules>
                 </args>
             </adminhtml>
